@@ -12,6 +12,8 @@
     "@types/mongoose": "^5.11.97",
     "axios": "^1.7.2",
     "firebase": "^10.12.4",
+    "flowbite": "^2.4.1",
+    "flowbite-react": "^0.10.1",
     "mongoose": "^8.5.1",
     "next": "14.2.5",
     "react": "^18",

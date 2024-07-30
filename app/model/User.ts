@@ -10,7 +10,7 @@ export interface ISubject extends Document {
 }
 
 // Define the schema for a Subject
-const SubjectSchema: Schema = new Schema({
+export const SubjectSchema: Schema = new Schema({
   name: { type: String, required: true },
   attended: { type: Number, required: true },
   total: { type: Number, required: true }
