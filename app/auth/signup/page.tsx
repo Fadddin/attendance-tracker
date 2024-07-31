@@ -77,8 +77,11 @@ export default function Signin() {
 
     return (
         <div className='w-full'>
+            <div className='flex justify-center font-bold text-2xl m-6'>
+                SIGN UP
+            </div>
 
-            <form className="flex max-w-md flex-col gap-4"  onSubmit={handleSignUp}>
+            <form className="flex max-w-md flex-col gap-4 p-4"  onSubmit={handleSignUp}>
                 <div>
                     <div className="mb-2 block">
                         <Label htmlFor="email1" value="Your email" className='text-white' />
@@ -111,7 +114,7 @@ export default function Signin() {
           <Checkbox id="remember" />
           <Label htmlFor="remember">Remember me</Label>
         </div> */}
-                <Button type="submit">Submit</Button>
+                <Button type="submit">SignUp</Button>
             </form>
             {error && <p>{error}</p>}
         </div>

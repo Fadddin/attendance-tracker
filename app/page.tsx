@@ -29,8 +29,9 @@ export default function Home() {
 
 
       </div> : <div>
-        <div>
-          Login or SignUp to continue
+        <div className="flex justify-center text-md ">
+
+          <Link href='/auth/signup' className="bg-blue-500 text-white font-mono rounded px-4 py-2">Signin or SignUp to continue</Link>
         </div>
       </div>}
 

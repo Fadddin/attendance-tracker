@@ -5,7 +5,7 @@ import axios from 'axios';
 import { auth } from '../utils/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
-
+import { Modal, Spinner } from 'flowbite-react';
 
 interface Subject {
     name: string;
@@ -25,6 +25,7 @@ const EditUserDataPage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [newSubject, setNewSubject] = useState<Subject>({ name: '', attended: 0, total: 0 });
     const [user] = useAuthState(auth);
+    const [isSaving, setIsSaving] = useState<boolean>(false);
 
     const router = useRouter();
 
@@ -72,6 +73,7 @@ const EditUserDataPage: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+        setIsSaving(true);
 
         try {
             await axios.put(`/api/user`, {
@@ -80,10 +82,12 @@ const EditUserDataPage: React.FC = () => {
                 subjects: data?.subjects,
             });
             alert('User data updated successfully');
-            router.push('/dash')
+            router.push('/dash');
         } catch (error) {
             console.error('Error updating user data:', error);
             setError('Failed to update user data');
+        } finally {
+            setIsSaving(false);
         }
     };
 
@@ -97,7 +101,17 @@ const EditUserDataPage: React.FC = () => {
 
     return (
         <div>
-            <h1>Edit User Data</h1>
+            <Modal show={isSaving} size="md" popup={true} onClose={() => setIsSaving(false)}>
+                <Modal.Header />
+                <Modal.Body>
+                    <div className="text-center">
+                        <Spinner size="xl" />
+                        <h3 className="text-lg font-medium text-gray-900 mt-4">Saving...</h3>
+                    </div>
+                </Modal.Body>
+            </Modal>
+
+            <h1 className='text-2xl font-bold my-2 mx-2'>Edit User Data</h1>
             <div className='m-8'>
                 {data && (
                     <form onSubmit={handleSubmit}>
@@ -126,7 +140,7 @@ const EditUserDataPage: React.FC = () => {
                         </div>
                         <h3>Subjects:</h3>
                         {data.subjects.map((subject, index) => (
-                            <div key={index} className="mb-4">
+                            <div key={index} className="border border-slate-600 rounded mx-1 my-2 px-2 py-4">
                                 <label>
                                     Subject Name:
                                     <input
@@ -154,47 +168,18 @@ const EditUserDataPage: React.FC = () => {
                                         className="ml-2 px-2 py-1 border rounded text-black"
                                     />
                                 </label>
-                                <button type="button" onClick={() => handleRemoveSubject(index)} className="ml-4 px-2 py-1 bg-red-500 text-white rounded">
+                                <button type="button" onClick={() => handleRemoveSubject(index)} className="mt-2 ml-4 px-2 py-1 bg-red-500 text-white rounded">
                                     Remove
                                 </button>
                             </div>
                         ))}
-                        <div className="mb-4">
-                            <h4>Add New Subject:</h4>
-                            <label>
-                                Subject Name:
-                                <input
-                                    type="text"
-                                    value={newSubject.name}
-                                    onChange={(e) => setNewSubject({ ...newSubject, name: e.target.value })}
-                                    className="ml-2 px-2 py-1 border rounded text-black"
-                                />
-                            </label>
-                            <label className="ml-4">
-                                Attended:
-                                <input
-                                    type="number"
-                                    value={newSubject.attended}
-                                    onChange={(e) => setNewSubject({ ...newSubject, attended: parseInt(e.target.value) })}
-                                    className="ml-2 px-2 py-1 border rounded text-black"
-                                />
-                            </label>
-                            <label className="ml-4">
-                                Total:
-                                <input
-                                    type="number"
-                                    value={newSubject.total}
-                                    onChange={(e) => setNewSubject({ ...newSubject, total: parseInt(e.target.value) })}
-                                    className="ml-2 px-2 py-1 border rounded text-black"
-                                />
-                            </label>
-                            <button type="button" onClick={handleAddSubject} className="ml-4 px-2 py-1 bg-green-500 text-white rounded">
-                                Add Subject
+
+                        <div className='flex justify-center'>
+                            <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
+                                Save
                             </button>
                         </div>
-                        <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
-                            Save
-                        </button>
+
                     </form>
                 )}
             </div>

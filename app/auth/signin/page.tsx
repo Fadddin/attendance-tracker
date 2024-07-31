@@ -4,7 +4,7 @@ import { useState, FormEvent } from 'react';
 import { signIn } from '../../lib/auth';
 import { useRouter } from 'next/navigation';
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
-
+import Link from 'next/link';
 
 // export default function SignIn() {
 //     const [email, setEmail] = useState<string>('');
@@ -82,7 +82,11 @@ export default function Signin() {
     return (
         <div className='w-full'>
 
-            <form className="flex max-w-md flex-col gap-4"  onSubmit={handleSignIn}>
+            <div className='flex justify-center font-bold text-2xl m-6'>
+                SIGN IN
+            </div>
+
+            <form className="flex max-w-md flex-col gap-4 p-4"  onSubmit={handleSignIn}>
                 <div>
                     <div className="mb-2 block">
                         <Label htmlFor="email1" value="Your email" className='text-white' />
@@ -115,8 +119,11 @@ export default function Signin() {
           <Checkbox id="remember" />
           <Label htmlFor="remember">Remember me</Label>
         </div> */}
-                <Button type="submit">Submit</Button>
+                <Button type="submit">SignIn</Button>
             </form>
+            <div>
+                don't have an account ? <Link href="/auth/signup">Sign Up </Link> 
+            </div>
             {error && <p>{error}</p>}
         </div>
     );
