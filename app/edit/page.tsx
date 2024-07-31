@@ -153,6 +153,7 @@ const EditUserDataPage: React.FC = () => {
                                 <br />
                                 <label className="ml-4">
                                     Attended:
+                                    <br />
                                     <input
                                         type="number"
                                         value={subject.attended}
@@ -163,6 +164,7 @@ const EditUserDataPage: React.FC = () => {
                                 <br />
                                 <label className="ml-4">
                                     Total:
+                                    <br />
                                     <input
                                         type="number"
                                         value={subject.total}
