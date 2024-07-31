@@ -37,7 +37,7 @@ const CreateUserPage: React.FC = () => {
         console.log(email, name, subjects)
         
         try {
-            const res = await axios.post('http://localhost:3000/api/user', {
+            const res = await axios.post('/api/user', {
                 name,
                 user : email,
                 subjects
