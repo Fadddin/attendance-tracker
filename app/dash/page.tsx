@@ -103,7 +103,7 @@ const HomePage: React.FC = () => {
 
             <h1>User Information</h1>
             {data && (
-                <div>
+                <div className='m-4'>
                     <h2>Name: {data.name}</h2>
                     <h3>Username: {data.user}</h3>
                     <h3>Subjects:</h3>
@@ -125,6 +125,10 @@ const HomePage: React.FC = () => {
                     </ul>
                 </div>
             )}
+
+            <div>
+                <Link href='/edit' className='px-4 py-2 bg-blue-500 rounded-lg m-4'> Edit </Link>
+            </div>
         </div>
     );
 };

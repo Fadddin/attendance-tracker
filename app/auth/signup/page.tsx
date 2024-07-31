@@ -2,11 +2,15 @@
 
 import { useState, FormEvent } from 'react';
 import { signUp } from '../../lib/auth';
+import { useRouter } from 'next/navigation';
+
 
 export default function SignUp() {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
+
+    const router = useRouter();
 
     const handleSignUp = async (e: FormEvent) => {
         e.preventDefault();
@@ -14,6 +18,8 @@ export default function SignUp() {
         try {
             const user = await signUp(email, password);
             console.log('User signed up:', user);
+            router.push('/dash');
+
         } catch (error) {
             setError((error as Error).message);
         }
