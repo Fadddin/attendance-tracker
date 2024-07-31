@@ -150,6 +150,7 @@ const EditUserDataPage: React.FC = () => {
                                         className="ml-2 px-2 py-1 border rounded text-black"
                                     />
                                 </label>
+                                <br />
                                 <label className="ml-4">
                                     Attended:
                                     <input
@@ -159,6 +160,7 @@ const EditUserDataPage: React.FC = () => {
                                         className="ml-2 px-2 py-1 border rounded text-black"
                                     />
                                 </label>
+                                <br />
                                 <label className="ml-4">
                                     Total:
                                     <input
