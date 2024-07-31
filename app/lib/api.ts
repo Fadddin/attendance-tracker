@@ -15,7 +15,7 @@ interface UserData {
 
 export const fetchUserData = async (Id: string): Promise<UserData> => {
     try {
-        const response = await axios.get<UserData>(`http://localhost:3000/api/user/${Id}`);
+        const response = await axios.get<UserData>(`/api/user/${Id}`);
         return response.data;
     } catch (error) {
         console.error('Error fetching user data:', error);
