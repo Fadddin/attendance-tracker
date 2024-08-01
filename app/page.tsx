@@ -25,7 +25,7 @@ export default function Home() {
         </p>
       </div>
       {user ? <div className="flex justify-center m-6 gap-4">
-        <Link href='/dash' className="text-xl lg:text-2xl font-bold px-4 py-2 bg-slate-800 rounded-lg"> GO TO DASHBOARD</Link>
+        <Link href='/dash' className="text-xl lg:text-2xl font-bold px-4 py-2 bg-blue-600 rounded-lg"> GO TO DASHBOARD</Link>
 
 
       </div> : <div>

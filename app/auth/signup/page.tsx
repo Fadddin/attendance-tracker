@@ -4,6 +4,7 @@ import { useState, FormEvent } from 'react';
 import { signUp } from '../../lib/auth';
 import { useRouter } from 'next/navigation';
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
+import Link from 'next/link';
 
 
 // export default function SignUp() {
@@ -116,6 +117,9 @@ export default function Signin() {
         </div> */}
                 <Button type="submit">SignUp</Button>
             </form>
+            <div className='mx-4'>
+                Already have an account ? <Link href="/auth/signin" className='text-blue-500'>Sign In </Link> 
+            </div>
             {error && <p>{error}</p>}
         </div>
     );

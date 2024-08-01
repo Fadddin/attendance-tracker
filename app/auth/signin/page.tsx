@@ -121,8 +121,8 @@ export default function Signin() {
         </div> */}
                 <Button type="submit">SignIn</Button>
             </form>
-            <div>
-                don't have an account ? <Link href="/auth/signup">Sign Up </Link> 
+            <div className='mx-4'>
+                Don't have an account ? <Link href="/auth/signup" className='text-blue-500'>Sign Up </Link> 
             </div>
             {error && <p>{error}</p>}
         </div>
