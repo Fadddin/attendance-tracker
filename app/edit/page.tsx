@@ -11,6 +11,7 @@ interface Subject {
     name: string;
     attended: number;
     total: number;
+    days: string[];
 }
 
 interface UserData {
@@ -23,16 +24,19 @@ const EditUserDataPage: React.FC = () => {
     const [data, setData] = useState<UserData | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [newSubject, setNewSubject] = useState<Subject>({ name: '', attended: 0, total: 0 });
+    const [newSubject, setNewSubject] = useState<Subject>({ name: '', attended: 0, total: 0, days: [] });
     const [user] = useAuthState(auth);
     const [isSaving, setIsSaving] = useState<boolean>(false);
 
     const router = useRouter();
 
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const res = await axios.get(`/api/user/${user?.email}`);
+                console.log(res.data[0].subjects)
                 setData(res.data[0]);
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -52,17 +56,27 @@ const EditUserDataPage: React.FC = () => {
         setData({ ...data, [field]: value });
     };
 
-    const handleSubjectChange = (index: number, field: string, value: string | number) => {
+    const handleSubjectChange = (index: number, field: string, value: string | number | string[]) => {
         if (!data) return;
         const updatedSubjects = [...data.subjects];
         updatedSubjects[index] = { ...updatedSubjects[index], [field]: value };
         setData({ ...data, subjects: updatedSubjects });
     };
 
+    const handleDayChange = (index: number, day: string) => {
+        if (!data) return;
+        const updatedSubjects = [...data.subjects];
+        const days = updatedSubjects[index].days.includes(day)
+            ? updatedSubjects[index].days.filter(d => d !== day)
+            : [...updatedSubjects[index].days, day];
+        updatedSubjects[index] = { ...updatedSubjects[index], days };
+        setData({ ...data, subjects: updatedSubjects });
+    };
+
     const handleAddSubject = () => {
         if (!data) return;
         setData({ ...data, subjects: [...data.subjects, newSubject] });
-        setNewSubject({ name: '', attended: 0, total: 0 });
+        setNewSubject({ name: '', attended: 0, total: 0, days: [] });
     };
 
     const handleRemoveSubject = (index: number) => {
@@ -172,11 +186,89 @@ const EditUserDataPage: React.FC = () => {
                                         className="ml-2 px-2 py-1 border rounded text-black"
                                     />
                                 </label>
+                                <div className="ml-4">
+                                    <label>Days:</label>
+                                    <div className="flex flex-wrap">
+                                        {daysOfWeek.map(day => (
+                                            <div key={day} className="mr-2 mt-2">
+                                                <label>
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={subject.days.includes(day)}
+                                                        onChange={() => handleDayChange(index, day)}
+                                                        className="mr-1"
+                                                    />
+                                                    {day}
+                                                </label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
                                 <button type="button" onClick={() => handleRemoveSubject(index)} className="mt-2 ml-4 px-2 py-1 bg-red-500 text-white rounded">
                                     Remove
                                 </button>
                             </div>
                         ))}
+
+                        <div className="border border-slate-600 rounded mx-1 my-2 px-2 py-4">
+                            <label>
+                                Subject Name:
+                                <input
+                                    type="text"
+                                    value={newSubject.name}
+                                    onChange={(e) => setNewSubject({ ...newSubject, name: e.target.value })}
+                                    className="ml-2 px-2 py-1 border rounded text-black"
+                                />
+                            </label>
+                            <br />
+                            <label className="ml-4">
+                                Attended:
+                                <br />
+                                <input
+                                    type="number"
+                                    value={newSubject.attended}
+                                    onChange={(e) => setNewSubject({ ...newSubject, attended: parseInt(e.target.value) })}
+                                    className="ml-2 px-2 py-1 border rounded text-black"
+                                />
+                            </label>
+                            <br />
+                            <label className="ml-4">
+                                Total:
+                                <br />
+                                <input
+                                    type="number"
+                                    value={newSubject.total}
+                                    onChange={(e) => setNewSubject({ ...newSubject, total: parseInt(e.target.value) })}
+                                    className="ml-2 px-2 py-1 border rounded text-black"
+                                />
+                            </label>
+                            <div className="ml-4">
+                                <label>Days:</label>
+                                <div className="flex flex-wrap">
+                                    {daysOfWeek.map(day => (
+                                        <div key={day} className="mr-2 mt-2">
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={newSubject.days.includes(day)}
+                                                    onChange={() => {
+                                                        const newDays = newSubject.days.includes(day)
+                                                            ? newSubject.days.filter(d => d !== day)
+                                                            : [...newSubject.days, day];
+                                                        setNewSubject({ ...newSubject, days: newDays });
+                                                    }}
+                                                    className="mr-1"
+                                                />
+                                                {day}
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <button type="button" onClick={handleAddSubject} className="mt-2 ml-4 px-2 py-1 bg-green-500 text-white rounded">
+                                Add Subject
+                            </button>
+                        </div>
 
                         <div className='flex justify-center'>
                             <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">

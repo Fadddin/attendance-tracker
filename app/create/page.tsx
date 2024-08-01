@@ -7,27 +7,40 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import axios from 'axios';
 import { Modal, Spinner } from 'flowbite-react';
 
+const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
 const CreateUserPage: React.FC = () => {
     const [user] = useAuthState(auth);
     const email = user?.email;
 
     const [name, setName] = useState('');
-    const [subjects, setSubjects] = useState([{ name: '', attended: 0, total: 0 }]);
+    const [subjects, setSubjects] = useState([{ name: '', attended: 0, total: 0, days: [] as string[] }]);
     const [isCreating, setIsCreating] = useState<boolean>(false);
     const router = useRouter();
 
-    const handleSubjectChange = (index: number, field: string, value: string | number) => {
+    const handleSubjectChange = (index: number, field: string, value: string | number | string[]) => {
         const newSubjects = [...subjects];
         newSubjects[index] = { ...newSubjects[index], [field]: value };
         setSubjects(newSubjects);
     };
 
     const handleAddSubject = () => {
-        setSubjects([...subjects, { name: '', attended: 0, total: 0 }]);
+        setSubjects([...subjects, { name: '', attended: 0, total: 0, days: [] }]);
     };
 
     const handleRemoveSubject = (index: number) => {
         const newSubjects = subjects.filter((_, i) => i !== index);
+        setSubjects(newSubjects);
+    };
+
+    const handleDayChange = (index: number, day: string) => {
+        const newSubjects = [...subjects];
+        const days = newSubjects[index].days;
+        if (days.includes(day)) {
+            newSubjects[index].days = days.filter(d => d !== day);
+        } else {
+            newSubjects[index].days = [...days, day];
+        }
         setSubjects(newSubjects);
     };
 
@@ -41,6 +54,7 @@ const CreateUserPage: React.FC = () => {
                 user: email,
                 subjects
             });
+            console.log(subjects)
             alert('Record Created Successfully');
             router.push('/dash'); // Redirect to home or another page
         } catch (error) {
@@ -109,6 +123,20 @@ const CreateUserPage: React.FC = () => {
                                 className='mx-2 text-black rounded'
                             />
                             <br />
+                            <div>
+                                <h3>Days</h3>
+                                {daysOfWeek.map(day => (
+                                    <label key={day} className="inline-flex items-center mr-2">
+                                        <input
+                                            type="checkbox"
+                                            checked={subject.days.includes(day)}
+                                            onChange={() => handleDayChange(index, day)}
+                                            className="form-checkbox text-indigo-600"
+                                        />
+                                        <span className="ml-2">{day}</span>
+                                    </label>
+                                ))}
+                            </div>
                             <button type="button" className='bg-red-500 px-2 rounded mt-2' onClick={() => handleRemoveSubject(index)}>Remove</button>
                         </div>
                     ))}

@@ -1,5 +1,3 @@
-// src/models/User.ts
-
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 // Define the interface for a Subject
@@ -7,13 +5,15 @@ export interface ISubject extends Document {
   name: string;
   attended: number;
   total: number;
+  days: string[]; // Add days field
 }
 
 // Define the schema for a Subject
 export const SubjectSchema: Schema = new Schema({
   name: { type: String, required: true },
   attended: { type: Number, required: true },
-  total: { type: Number, required: true }
+  total: { type: Number, required: true },
+  days: { type: [String], required: true } // Define days as an array of strings
 });
 
 // Define the interface for a User

@@ -12,6 +12,7 @@ interface Subject {
     name: string;
     attended: number;
     total: number;
+    days: string[];
 }
 
 interface UserData {
@@ -26,6 +27,15 @@ const HomePage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [user] = useAuthState(auth);
     const [isUpdating, setIsUpdating] = useState<boolean>(false);
+
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    const getCurrentDay = (): string => {
+        const today = new Date();
+        return daysOfWeek[today.getDay()];
+    };
+
+    const [selectedDay, setSelectedDay] = useState<string>(getCurrentDay);
 
     const incrementAttendance = async (subjectName: string) => {
         setIsUpdating(true);
@@ -102,6 +112,8 @@ const HomePage: React.FC = () => {
         }
     };
 
+    const subjectsForSelectedDay = data?.subjects.filter(subject => subject.days.includes(selectedDay)) || [];
+
     return (
         <div>
             <div className='flex justify-center items-center'>
@@ -118,14 +130,14 @@ const HomePage: React.FC = () => {
             <div>
                 {data ? (
                     <div className='my-6'>
-                        <div className='flex justify-between items-center'>
-                            <Link href='/edit' className='px-4 py-2 bg-blue-500 rounded-lg m-4'> Edit </Link>
-                            <div className='mx-2'>
-                                <Link href='/dash' className='px-4 py-2 bg-blue-500 rounded-lg mx-2'> All </Link>
-                                <Link href='/viewschedule' className='px-4 py-2 bg-blue-500 rounded-lg'> Schedule </Link>
-                            </div>
+                    <div className='flex justify-between items-center'>
+                        <Link href='/edit' className='px-4 py-2 bg-blue-500 rounded-lg m-4'> Edit </Link>
+                        <div className='mx-2'>
+                            <Link href='/dash' className='px-4 py-2 bg-blue-500 rounded-lg mx-2'> All </Link>
+                            <Link href='/viewschedule' className='px-4 py-2 bg-blue-500 rounded-lg'> Schedule </Link>
                         </div>
                     </div>
+                </div>
                 ) : (
                     <div className='my-8 flex justify-center'>
                         <Link href='/create' className="text-md lg:text-xl mx-6 font-bold px-4 py-2 bg-blue-600 hover:bg-blue-800 rounded-lg">
@@ -135,11 +147,23 @@ const HomePage: React.FC = () => {
                 )}
             </div>
 
+            <div className=" mb-4">
+                {daysOfWeek.map(day => (
+                    <button
+                        key={day}
+                        className={`px-4 py-2 m-1 rounded ${selectedDay === day ? 'bg-blue-500 text-white' : 'bg-gray-300'}`}
+                        onClick={() => setSelectedDay(day)}
+                    >
+                        {day}
+                    </button>
+                ))}
+            </div>
+
             {data && (
                 <div className='m-4'>
-                    <h3 className='text-3xl my-4 font-bold'>ATTENDANCE:</h3>
+                    <h3 className='text-3xl my-4 font-bold'>{selectedDay}'s ATTENDANCE:</h3>
                     <ul>
-                        {data.subjects?.map((subject, index) => {
+                        {subjectsForSelectedDay.map((subject, index) => {
                             const { canMiss, needs } = calculateAttendanceDetails(subject);
                             return (
                                 <li key={index} className='border rounded m-2 p-4 border-slate-700'>
