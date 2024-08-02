@@ -79,7 +79,7 @@ const CreateUserPage: React.FC = () => {
 
             <h1 className='text-xl font-bold my-4 mx-2'>Create Record</h1>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className='mx-2'>
                     <label>Name:</label>
                     <input
                         type="text"
@@ -90,7 +90,7 @@ const CreateUserPage: React.FC = () => {
                     />
                 </div>
                 <div>
-                    <h2>Subjects</h2>
+                    <h2 className='mx-2 my-4 text-xl'>Subjects :</h2>
                     {subjects.map((subject, index) => (
                         <div key={index} className='border border-slate-600 rounded mx-1 my-2 px-2 py-4'>
                             <label htmlFor="name">Subject Name</label>
@@ -100,7 +100,7 @@ const CreateUserPage: React.FC = () => {
                                 value={subject.name}
                                 onChange={(e) => handleSubjectChange(index, 'name', e.target.value)}
                                 required
-                                className='mx-2 text-black rounded'
+                                className='mx-2 my-1 text-black rounded'
                             />
                             <br />
                             <label htmlFor="attended">Attended</label>
@@ -110,7 +110,7 @@ const CreateUserPage: React.FC = () => {
                                 value={subject.attended}
                                 onChange={(e) => handleSubjectChange(index, 'attended', parseInt(e.target.value))}
                                 required
-                                className='mx-2 text-black rounded'
+                                className='mx-2 my-1 text-black rounded'
                             />
                             <br />
                             <label htmlFor="total">Total</label>
@@ -120,7 +120,7 @@ const CreateUserPage: React.FC = () => {
                                 value={subject.total}
                                 onChange={(e) => handleSubjectChange(index, 'total', parseInt(e.target.value))}
                                 required
-                                className='mx-2 text-black rounded'
+                                className='mx-2 my-1 text-black rounded'
                             />
                             <br />
                             <div>

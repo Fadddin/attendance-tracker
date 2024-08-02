@@ -1,12 +1,13 @@
 "use client"
 
 import { useState, FormEvent } from 'react';
-import { signIn } from '../../lib/auth';
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { Button, Label, TextInput, Modal, Spinner } from "flowbite-react";
 import Link from 'next/link';
 import { auth } from '@/app/utils/firebase';
 import { sendPasswordResetEmail } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export default function Signin() {
     const [email, setEmail] = useState<string>('');
@@ -20,13 +21,18 @@ export default function Signin() {
 
     const router = useRouter();
 
+    async function signIn(email: string, password: string) {
+        const credential = await signInWithEmailAndPassword(auth, email, password);
+        return credential.user;
+    }
+
     const handleSignIn = async (e: FormEvent) => {
         e.preventDefault();
         setError(null);
         try {
             const user = await signIn(email, password);
             console.log('User signed in:', user);
-            router.push('/dash'); 
+            router.push('/dash');
         } catch (error) {
             setError((error as Error).message);
         }
@@ -47,6 +53,18 @@ export default function Signin() {
         }
     };
 
+    const handleGoogleSignIn = async () => {
+        const provider = new GoogleAuthProvider();
+        try {
+            const result = await signInWithPopup(auth, provider);
+            console.log('User signed in with Google:', result.user);
+            router.push('/dash');
+        } catch (error) {
+            console.error('Error signing in with Google:', error);
+            setError('Failed to sign in with Google');
+        }
+    };
+
     return (
         <div className='w-full'>
             <div className='flex justify-center font-bold text-2xl m-6'>
@@ -58,26 +76,26 @@ export default function Signin() {
                     <div className="mb-2 block">
                         <Label htmlFor="email1" value="Your email" className='text-white' />
                     </div>
-                    <TextInput 
-                        id="email1" 
-                        type="email" 
-                        placeholder="name@email.com" 
+                    <TextInput
+                        id="email1"
+                        type="email"
+                        placeholder="name@email.com"
                         required
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)} 
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
                 <div>
                     <div className="mb-2 block">
-                        <Label 
-                            htmlFor="password1" 
-                            value="Your password" 
-                            className='text-white'    
+                        <Label
+                            htmlFor="password1"
+                            value="Your password"
+                            className='text-white'
                         />
                     </div>
-                    <TextInput 
-                        id="password1" 
-                        type="password" 
+                    <TextInput
+                        id="password1"
+                        type="password"
                         required
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -85,8 +103,23 @@ export default function Signin() {
                 </div>
                 <Button type="submit">Sign In</Button>
             </form>
+
+            <div className='flex justify-center mb-6'>
+                <button
+                    onClick={handleGoogleSignIn}
+                    className="flex items-center justify-center mt-4 px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded shadow-sm hover:bg-gray-100 transition"
+                >
+                    <img
+                        src="/googly.webp" // Place your Google logo in the public/images directory
+                        alt="Google Logo"
+                        className="h-5 w-5 mr-2"
+                    />
+                    Sign in with Google
+                </button>
+            </div>
+
             <div className='mx-4'>
-                Don't have an account? <Link href="/auth/signup" className='text-blue-500'>Sign Up</Link> 
+                Don't have an account? <Link href="/auth/signup" className='text-blue-500'>Sign Up</Link>
             </div>
             <div className='mx-4 mt-2'>
                 Forgot your password? <button onClick={() => setShowResetModal(true)} className='text-blue-500 underline'>Reset Password</button>
