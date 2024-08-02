@@ -17,7 +17,7 @@ export default function Home() {
     <div>
 
       <div className="px-4 py-6">
-        <h1 className="mb-4 text-3xl font-extrabold text-gray-200 dark:text-white md:text-5xl lg:text-6xl">
+        <h1 className="mb-4 text-3xl font-extrabold md:text-5xl lg:text-6xl">
           <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">TRACK ATTENDANCE</span> SIMPLIFIED
         </h1>
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">

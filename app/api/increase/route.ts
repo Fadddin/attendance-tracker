@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import connect from "@/app/lib/mongoose";
 import User from "@/app/model/User";
-
+import History from '@/app/model/history';
 // export async function GET(
 //   request: NextRequest,
 //   { params }: { params: { id: string } }
@@ -42,6 +42,15 @@ export async function PUT(req: NextRequest) {
         subject.total += 1;
 
         await userDoc.save();
+
+        const newHistory = new History({
+            user,
+            subjectName,
+            date: new Date(),
+            time: new Date().toLocaleTimeString(),
+            status: 'present'
+        });
+        await newHistory.save();
 
         return NextResponse.json({ message: 'Subject updated successfully', user: userDoc }, { status: 200 });
     } catch (error) {
