@@ -44,11 +44,20 @@ export async function PUT(req: NextRequest) {
 
         await userDoc.save();
 
+        const addTime = (hours: number, minutes: number): string => {
+            const now = new Date();
+            now.setHours(now.getHours() + hours);
+            now.setMinutes(now.getMinutes() + minutes);
+            return now.toLocaleTimeString();
+        };
+
+        const newTime = addTime(5, 30);
+
         const newHistory = new History({
             user,
             subjectName,
             date: new Date(),
-            time: new Date().toLocaleTimeString(),
+            time: newTime,
             status: 'absent'
         });
         await newHistory.save();
