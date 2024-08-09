@@ -41,7 +41,7 @@ const Navbar = () => {
     <div className="relative z-50">
       <div className="flex flex-wrap p-6 justify-between bg-indigo-600 text-white items-center">
         <Link href="/">
-          <div className="text-2xl font-bold">Attendy</div>
+          <div className="text-2xl font-margarine">Attendy</div>
         </Link>
 
         <button

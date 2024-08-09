@@ -21,7 +21,7 @@ export default function Home() {
           <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">TRACK ATTENDANCE</span> SIMPLIFIED
         </h1>
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-          Track your class attendance using a few clicks. Edit it. Delete it. All at ease
+        Effortlessly track your class attendance with just a few clicks. Easily edit or delete entries whenever needed, all in one place.
         </p>
       </div>
       {user ? <div className="flex justify-center m-6 gap-4">
