@@ -41,7 +41,6 @@ const HistoryPage: React.FC = () => {
 
     const handleDelete = async (id: string) => {
         setIsDeleting(true);
-        console.log(id);
         try {
             await axios.delete(`/api/deletehis/${id}`);
             setHistory(history.filter(record => record._id !== id));
@@ -54,7 +53,11 @@ const HistoryPage: React.FC = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Spinner size="xl" />
+            </div>
+        );
     }
 
     if (error) {

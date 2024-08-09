@@ -36,7 +36,7 @@ const EditUserDataPage: React.FC = () => {
         const fetchData = async () => {
             try {
                 const res = await axios.get(`/api/user/${user?.email}`);
-                console.log(res.data[0].subjects)
+                console.log(res.data[0].subjects);
                 setData(res.data[0]);
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -106,7 +106,11 @@ const EditUserDataPage: React.FC = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <Spinner size="xl" />
+            </div>
+        );
     }
 
     if (error) {
@@ -125,8 +129,8 @@ const EditUserDataPage: React.FC = () => {
                 </Modal.Body>
             </Modal>
 
-            <h1 className='text-2xl font-bold my-2 mx-2'>Edit User Data</h1>
-            <div className='m-8'>
+            <h1 className="text-2xl font-bold my-2 mx-2">Edit User Data</h1>
+            <div className="m-8">
                 {data && (
                     <form onSubmit={handleSubmit}>
                         <div className="mb-4">
@@ -189,7 +193,7 @@ const EditUserDataPage: React.FC = () => {
                                 <div className="ml-4">
                                     <label>Days:</label>
                                     <div className="flex flex-wrap">
-                                        {daysOfWeek.map(day => (
+                                        {daysOfWeek.map((day) => (
                                             <div key={day} className="mr-2 mt-2">
                                                 <label>
                                                     <input
@@ -204,7 +208,11 @@ const EditUserDataPage: React.FC = () => {
                                         ))}
                                     </div>
                                 </div>
-                                <button type="button" onClick={() => handleRemoveSubject(index)} className="mt-2 ml-4 px-2 py-1 bg-red-500 text-white rounded">
+                                <button
+                                    type="button"
+                                    onClick={() => handleRemoveSubject(index)}
+                                    className="mt-2 ml-4 px-2 py-1 bg-red-500 text-white rounded"
+                                >
                                     Remove
                                 </button>
                             </div>
@@ -227,7 +235,9 @@ const EditUserDataPage: React.FC = () => {
                                 <input
                                     type="number"
                                     value={newSubject.attended}
-                                    onChange={(e) => setNewSubject({ ...newSubject, attended: parseInt(e.target.value) })}
+                                    onChange={(e) =>
+                                        setNewSubject({ ...newSubject, attended: parseInt(e.target.value) })
+                                    }
                                     className="ml-2 px-2 py-1 border rounded text-black"
                                 />
                             </label>
@@ -245,7 +255,7 @@ const EditUserDataPage: React.FC = () => {
                             <div className="ml-4">
                                 <label>Days:</label>
                                 <div className="flex flex-wrap">
-                                    {daysOfWeek.map(day => (
+                                    {daysOfWeek.map((day) => (
                                         <div key={day} className="mr-2 mt-2">
                                             <label>
                                                 <input
@@ -253,7 +263,7 @@ const EditUserDataPage: React.FC = () => {
                                                     checked={newSubject.days.includes(day)}
                                                     onChange={() => {
                                                         const newDays = newSubject.days.includes(day)
-                                                            ? newSubject.days.filter(d => d !== day)
+                                                            ? newSubject.days.filter((d) => d !== day)
                                                             : [...newSubject.days, day];
                                                         setNewSubject({ ...newSubject, days: newDays });
                                                     }}
@@ -265,17 +275,20 @@ const EditUserDataPage: React.FC = () => {
                                     ))}
                                 </div>
                             </div>
-                            <button type="button" onClick={handleAddSubject} className="mt-2 ml-4 px-2 py-1 bg-green-500 text-white rounded">
+                            <button
+                                type="button"
+                                onClick={handleAddSubject}
+                                className="mt-2 ml-4 px-2 py-1 bg-green-500 text-white rounded"
+                            >
                                 Add Subject
                             </button>
                         </div>
 
-                        <div className='flex justify-center'>
+                        <div className="flex justify-center">
                             <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
                                 Save
                             </button>
                         </div>
-
                     </form>
                 )}
             </div>

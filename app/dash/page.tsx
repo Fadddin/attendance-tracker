@@ -83,7 +83,11 @@ const HomePage: React.FC = () => {
     }, [user?.email]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className='flex justify-center items-center h-screen'>
+                <Spinner size="xl" />
+            </div>
+        );
     }
 
     if (error) {
@@ -119,13 +123,11 @@ const HomePage: React.FC = () => {
                 {data ? (
                     <div className='my-6'>
                         <div className='flex justify-between items-center'>
-                        <div className='flex'>
-                            <Link href='/edit' className='px-4 py-2 bg-blue-500 rounded-lg ml-4 my-4'> Edit </Link>
-                            <Link href='/history' className='px-4 py-2 bg-blue-500 rounded-lg ml-2 my-4'> History </Link>
-                        </div>
-                            <div className='mx-2'>
-                                <Link href='/dash' className='px-4 py-2 bg-blue-500 rounded-lg mx-2'> All </Link>
-                                <Link href='/viewschedule' className='px-4 py-2 bg-blue-500 rounded-lg'> Schedule </Link>
+                            <div className='flex'>
+                                <Link href='/edit' className='px-4 py-2 bg-blue-500 rounded-lg ml-4 my-4'> Edit </Link>
+                                <Link href='/history' className='px-4 py-2 bg-blue-500 rounded-lg ml-2 my-4'> History </Link>
+                                <Link href='/dash' className='px-4 py-2 bg-blue-500 rounded-lg ml-2 my-4'> All </Link>
+                                <Link href='/viewschedule' className='px-4 py-2 bg-blue-500 rounded-lg ml-2 my-4'> Schedule </Link>
                             </div>
                         </div>
                     </div>
