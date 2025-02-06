@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Margarine&family=Shadows+Into+Light&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Margarine&family=Pacifico&family=Shadows+Into+Light&display=swap');
 @tailwind base;
 @tailwind components;
@@ -32,4 +31,16 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Make the whole layout take full viewport height */
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Make main content grow to push footer down */
+.content {
+  flex-grow: 1;
 }

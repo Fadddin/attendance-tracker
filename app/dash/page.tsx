@@ -68,6 +68,7 @@ const HomePage: React.FC = () => {
     useEffect(() => {
         const getData = async () => {
             try {
+                setLoading(true);
                 //@ts-ignore
                 const result = await fetchUserData(user?.email);
                 //@ts-ignore

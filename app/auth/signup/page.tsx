@@ -45,7 +45,8 @@ export default function SignUp() {
     };
 
     return (
-        <div className='w-full'>
+        <div className='w-full flex justify-center'>
+            <div>
             <div className='flex justify-center font-bold text-2xl m-6'>
                 SIGN UP
             </div>
@@ -101,6 +102,7 @@ export default function SignUp() {
                 Already have an account? <Link href="/auth/signin" className='text-blue-500'>Sign In</Link>
             </div>
             {error && <p className='text-red-500'>{error}</p>}
+        </div>
         </div>
     );
 }

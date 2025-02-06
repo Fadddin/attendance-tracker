@@ -66,7 +66,8 @@ export default function Signin() {
     };
 
     return (
-        <div className='w-full'>
+        <div className='w-full flex justify-center'>
+            <div>
             <div className='flex justify-center font-bold text-2xl m-6'>
                 SIGN IN
             </div>
@@ -154,6 +155,7 @@ export default function Signin() {
                     <Button onClick={() => setShowResetModal(false)}>Close</Button>
                 </Modal.Footer>
             </Modal>
+        </div>
         </div>
     );
 }

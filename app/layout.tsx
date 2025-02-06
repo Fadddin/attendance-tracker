@@ -5,11 +5,6 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/footer";
 import { Analytics } from '@vercel/analytics/react';
 
-// import Appbaar from "./components/Appbaar";
-
-
-// import { AuthProvider } from './lib/AuthContext';
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -25,12 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar/>
-        {/* <Appbaar/> */}
-        {children}
+        <div className="layout">
+          <Navbar />
+          <main className="content">{children}</main>
+          <Footer />
+        </div>
         <Analytics />
-        </body>
-        <Footer/>
+      </body>
     </html>
   );
 }

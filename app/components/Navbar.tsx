@@ -39,9 +39,9 @@ const Navbar = () => {
 
   return (
     <div className="relative z-50">
-      <div className="flex flex-wrap p-6 justify-between bg-indigo-600 text-white items-center">
+      <div className="flex flex-wrap p-6 justify-between bg-gradient-to-r from-indigo-600 to-blue-500 text-white items-center">
         <Link href="/">
-          <div className="text-2xl font-margarine">Attendy</div>
+          <div className="text-2xl font-serif">Attendy</div>
         </Link>
 
         <button
@@ -81,7 +81,7 @@ const Navbar = () => {
                 >
                   SignOut
                 </button>
-                <p className="mt-2 lg:mt-0 lg:ml-4 lg:text-md text-sm text-center bg-slate-800 rounded-2xl">
+                <p className="mt-2 lg:mt-0 lg:ml-4 lg:text-md text-sm text-center bg-slate-900 rounded-md p-2 font-serif">
                   {user.email}
                 </p>
               </div>
