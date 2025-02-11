@@ -201,6 +201,8 @@ const EditUserDataPage: React.FC = () => {
                                                 {day}
                                             </label>
                                         ))}
+
+                                        
                                     </div>
                                 </div>
 
@@ -213,6 +215,71 @@ const EditUserDataPage: React.FC = () => {
                                 </button>
                             </div>
                         ))}
+                         <div className="border border-slate-600 rounded mx-1 my-2 px-2 py-4">
+                            <label>
+                                Subject Name:
+                                <input
+                                    type="text"
+                                    value={newSubject.name}
+                                    onChange={(e) => setNewSubject({ ...newSubject, name: e.target.value })}
+                                    className="ml-2 px-2 py-1 border rounded text-black"
+                                />
+                            </label>
+                            <br />
+                            <label className="ml-4">
+                                Attended:
+                                <br />
+                                <input
+                                    type="number"
+                                    value={newSubject.attended}
+                                    onChange={(e) =>
+                                        setNewSubject({ ...newSubject, attended: parseInt(e.target.value) })
+                                    }
+                                    className="ml-2 px-2 py-1 border rounded text-black"
+                                />
+                            </label>
+                            <br />
+                            <label className="ml-4">
+                                Total:
+                                <br />
+                                <input
+                                    type="number"
+                                    value={newSubject.total}
+                                    onChange={(e) => setNewSubject({ ...newSubject, total: parseInt(e.target.value) })}
+                                    className="ml-2 px-2 py-1 border rounded text-black"
+                                />
+                            </label>
+                            <div className="ml-4">
+                                <label>Days:</label>
+                                <div className="flex flex-wrap">
+                                    {daysOfWeek.map((day) => (
+                                        <div key={day} className="mr-2 mt-2">
+                                            <label
+    className={`px-3 py-1 rounded-md border cursor-pointer ${
+        newSubject.days.includes(day) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'
+    }`}
+    onClick={() => {
+        const newDays = newSubject.days.includes(day)
+            ? newSubject.days.filter((d) => d !== day)
+            : [...newSubject.days, day];
+        setNewSubject({ ...newSubject, days: newDays });
+    }}
+>
+
+    {day}
+</label>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={handleAddSubject}
+                                className="mt-2 ml-4 px-2 py-1 bg-green-500 text-white rounded"
+                            >
+                                Add Subject
+                            </button>
+                        </div>
 
                         <div className="flex justify-center mt-4">
                             <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
